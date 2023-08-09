@@ -7,7 +7,7 @@ const pets = require(`./petsArray.js`);
 
 // write get home page but keep it empty for now
 app.get(`/`, (req, res) => {
-  res.send(`tis the home page`);
+  res.sendFile(__dirname + `/index.html`);
 });
 
 // write get for /pets
@@ -37,12 +37,14 @@ app.get(`/owner`, (req, res) => {
   // loop through array with if statement to find a match
   const ownerPets = pets.filter((pet) => pet.owner === ownerName);
   const ownerPetNames = ownerPets.map((pet) => pet.name);
-  const hasNames = ownerPets.find((pet) => pet.name)
+  const hasNames = ownerPets.find((pet) => pet.name);
 
   console.log(ownerPets);
   console.log(hasNames);
 
-  hasNames ? res.send(ownerPetNames.join(`, `)) : res.send(`no pets for that owner`);
+  hasNames
+    ? res.send(ownerPetNames.join(`, `))
+    : res.send(`no pets for that owner`);
 });
 
 const PORT = 4444;
