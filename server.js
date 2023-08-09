@@ -18,6 +18,20 @@ app.get(`/pets`, (req, res) => {
   res.send(petNames.join(`, `));
 });
 
+// write get for /pets/owner
+app.get(`/pets/owner`, (req, res) => {
+  // get the owner's name using query
+  const ownerName = req.query.owner;
+  // loop through array with if statement to find a match
+  const ownerPets = pets.filter((pet) => pet.owner === ownerName);
+  const ownerPetNames = ownerPets.map((pet) => pet.name);
+  const hasNames = ownerPets.find((pet) => pet.name);
+  
+  hasNames
+  ? res.send(ownerPetNames.join(`, `))
+  : res.send(`no pets for that owner`);
+});
+
 // write get for /pets/:name
 app.get(`/pets/:name`, (req, res) => {
   // get the name from param
@@ -25,26 +39,7 @@ app.get(`/pets/:name`, (req, res) => {
   // loop through array with if statement to find a match
   const foundPet = pets.find((pet) => pet.name === petName);
 
-  console.log(petName);
-
   foundPet ? res.send(foundPet.name) : res.send(`no pet by that name`);
-});
-
-// write get for /pets/owner
-app.get(`/owner`, (req, res) => {
-  // get the owner's name using query
-  const ownerName = req.query.owner;
-  // loop through array with if statement to find a match
-  const ownerPets = pets.filter((pet) => pet.owner === ownerName);
-  const ownerPetNames = ownerPets.map((pet) => pet.name);
-  const hasNames = ownerPets.find((pet) => pet.name);
-
-  console.log(ownerPets);
-  console.log(hasNames);
-
-  hasNames
-    ? res.send(ownerPetNames.join(`, `))
-    : res.send(`no pets for that owner`);
 });
 
 const PORT = 4444;
